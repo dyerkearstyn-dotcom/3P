@@ -20,13 +20,31 @@
 
 class trie {
 public:
+    trie();
+    ~trie();
     void insert(const std::string &s);
     bool contains(const std::string &s);
     bool is_prefix(const std::string &s);
     void extend(const std::string &prefix, std::vector<std::string> &result);
 
 private:
+    struct Node{
+        bool is_word;
+        Node* children[26];
+        Node() : is_word(false) {
+            for (int i = 0; i<26;i++){
+                children[i]=nullptr;
+            }
+        }
+        ~Node(){
+            for (int i=0;i<26;i++){
+                delete children[i];
+            }
+        }
+    };
+    Node* root;
 
+    void collect_words(Node* node,std::string& current_word,std::vector<std::string>& result);
 };
 
 #endif
